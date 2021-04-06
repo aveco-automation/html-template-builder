@@ -1,0 +1,10 @@
+{
+    "js" : ["gsap.min.js"],
+    "parameters" : [
+        { "id" : "MainText", "type" : "string", "info" : "Main text line" },
+        { "id" : "HeaderText", "type" : "string", "info" : "Header text" },
+        { "id" : "LowerText", "type" : "string", "info" : "Bottom text line bellow the main text" },
+        { "id" : "Info", "type" : "string", "info" : "Info text" },
+        { "id" : "Label", "type" : "string", "info" : "Bottom small text" }
+    ]
+}

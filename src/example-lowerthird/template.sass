@@ -1,0 +1,106 @@
+
+// We have different variables for background and foreground colors
+// Notice that black and white backgounds are slightly transparent
+
+$bkg-red: #c01010
+$bkg-black: #2c2323cc
+$bkg-white: #f0f0f0cc
+
+$fg-red: #c01010
+$fg-black: #2c2323
+$fg-white: #f0f0f0
+
+$font-family: Roboto, Helvetica, Arial
+$font-size-large: 36px
+$font-size-small: 22px
+
+$vertical-safe-area : 5%
+$horizontal-safe-area : 5%
+
+// Base container respects EBU R-095/2017 safe areas recommendation
+// Hidden by default, the container contains all elements which are
+// therefore displayed only when PLAY action is is invoked
+
+#container
+    position: absolute
+    top: $vertical-safe-area
+    bottom: $vertical-safe-area
+    left:  $horizontal-safe-area
+    right: $horizontal-safe-area
+    font-family: $font-family
+
+    &.visible
+        visibility: visible
+
+    &.hidden
+        visibility: hidden
+
+
+// LAYOUT
+
+// Lower third is aligned to the bottom-left corner of the safe-area
+#lower-third
+    position: absolute
+    bottom: 0
+    left: 0
+    display: flex
+    flex-direction: column
+
+    // we have three lines in the layout: #line1, #line2, #line3
+    div
+        display: flex
+        flex-direction: row
+        overflow: hidden
+        span
+            padding: 6px 14px
+
+    // move the first line contents (#header-text)
+    // to the far right of the graphic
+    #line1
+        justify-content: flex-end
+
+    // left segments have the fixed width of 150 pixels
+    // and their text is centered
+    #info, #label
+        width: 150px
+        span
+            margin: 0 auto
+
+    // expand main-text and lower-text to the width of the longest element
+    #main-text, #lower-text
+        flex-grow: 1
+
+
+// Apperance
+// This section defines colors and font sizes of CG elements
+
+#main-text
+    text-transform: uppercase
+    font-size: $font-size-large
+    background-color: $bkg-white
+    color: $fg-black
+
+#lower-text
+    font-size: $font-size-small
+    background-color: $bkg-black
+    color: $fg-white
+
+#label
+    font-size: $font-size-small
+    font-weight: bold
+    background-color: $bkg-white
+    color: $fg-black
+
+#info
+    font-size: $font-size-large
+    font-weight: bold
+    background-color: $bkg-red
+    color: $fg-white
+    // Main text slides behind this element,
+    // so info needs to be in the front
+    z-index: 100
+
+#header-text
+    font-size: $font-size-small
+    background-color: $bkg-red
+    color: $fg-white
