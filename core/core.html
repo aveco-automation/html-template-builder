@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ template_name }}</title>
+    <style>
+    {{ core_css }}
+    {{ tpl_css }}
+    </style>
+
+    {% for stylesheet in manifest.css %}
+        <link rel='stylesheet' href='{{ stylesheet }}' type='text/css'/>
+    {% endfor %}
+
+    <script>
+        {{ param_map }}
+    </script>
+
+    {% for script in manifest.js %}
+        <script src="{{ script }}"></script>
+    {% endfor %}
+</head>
+<body>
+    <ul id="debug-window"></ul>
+
+    {{ body }}
+
+    <script>
+    {{ core_js }}
+    {{ tpl_js }}
+    </script>
+</body>
+</html>

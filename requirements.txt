@@ -1,0 +1,7 @@
+nxtools
+htmlmin
+jsmin
+jinja2
+libsass
+typer
+watchdog

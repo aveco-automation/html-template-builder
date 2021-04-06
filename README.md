@@ -15,7 +15,7 @@ It aims to be as simple as possible, it does not use any JS framework and does n
 Installation
 ------------
 
-To run the software from source, Python 3.6 must be installed. You also need pip to install third-party libraries.
+To run the software from source, Python 3.6 or higher must be installed. You also need pip to install third-party libraries.
 
 ### Linux
 
@@ -92,6 +92,12 @@ You may also pass the following additional parameters:
 --help                 Show this message and exit.
 ```
 
+Known issues
+------------
+
+ - subdirectories of the template are not copied during build (only files in the template root)
+ - sass source directory (for third party imports) is not implemented (yet)
+ - log output is not nice and colored on Windows (will be fixed in the next release of nxtools)
 
 Legal
 -----
