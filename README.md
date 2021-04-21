@@ -16,7 +16,7 @@ Out of the box, it provides:
  - CSS reset: transparent background, overflow settings, font smoothing, box-sizing etc.
  - Debug mode to display log messages directly in the graphics output
  - JavaScript `parse_params` function for parsing arguments coming from CasparCG via the UPDATE call
- - JavaScript `amcp` function which enables sending AMCP command to a running CasparCG instance using Websocket2AMCP bridge
+ - JavaScript `amcp` function which enables sending AMCP command to a running CasparCG instance using [http2amcp bridge](https://github.com/aveco-automation/http2amcp)
 
 
 Installation
