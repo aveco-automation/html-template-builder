@@ -11,6 +11,13 @@ into a graphic template for CasparCG, or another HTML-enabled playout server.
 
 It aims to be as simple as possible, it does not use any JS framework and does not need several gigabytes of node dependencies.
 
+Out of the box, it provides:
+
+ - CSS reset: transparent background, overflow settings, font smoothing, box-sizing etc.
+ - Debug mode to display log messages directly in the graphics output
+ - JavaScript `parse_params` function for parsing arguments coming from CasparCG via the UPDATE call
+ - JavaScript `amcp` function which enables sending AMCP command to a running CasparCG instance using Websocket2AMCP bridge
+
 
 Installation
 ------------
@@ -31,6 +38,8 @@ Use the same procedure as with Linux or download the latest binary package from 
 
 Usage
 -----
+
+See the example in the `src/` directory.
 
 ### Template source
 
@@ -57,8 +66,31 @@ margins, body overflow, and so on.
 
 #### template.js
 
-Custom javascript
+Template logic. Within the JavaScript file, you may use the following bundled functions:
 
+##### parse_params
+
+`parse_params` is a helper used in update function.
+It parses an incoming string from CasparCG client/automation,
+which may be an XML or JSON and returns a javascript object:
+
+```javascript
+function update(data){
+    var params = parse_params(data);
+    if ("header-text" in params){
+        document.getElementById("header-text").innerHTML = params["header-text"];
+    }
+}
+```
+
+##### amcp
+
+You can use a this function to control the playout server.
+[http2amcp](https://github.com/aveco-automation/http2amcp) bridge must be running.
+
+```javascript
+amcp("MIXER 1-1 FILL .25 .25 .5 .5");
+```
 
 ### Additional files
 
