@@ -24,7 +24,7 @@ class TemplateBuilder():
 
         self.template = HTMLTemplate("core/core.html")
         self.base_css = process_sass("core/core.sass")
-        self.base_js = process_js("core.js")
+        self.base_js = process_js("core/core.js")
 
 
     @property
