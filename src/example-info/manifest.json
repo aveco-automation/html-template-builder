@@ -1,0 +1,38 @@
+{
+    "author_name" : "Martin Wacker",
+    "author_email" : "martas@imm.cz",
+    "parameters" : [
+        {
+            "id" : "header",
+            "type" : "string",
+            "default" : "Coming up next"
+        },
+        {
+            "id" : "line1",
+            "type" : "string",
+            "info" : "First line of the info bar",
+            "default" : ""
+        },
+        {
+            "id" : "line2",
+            "type" : "string",
+            "info" : "Second line of the info bar",
+            "default" : ""
+        },
+        {
+            "id" : "astra_category",
+            "type" : "string",
+            "info" : "NAME"
+        },
+        {
+            "id" : "astra_output",
+            "type" : "string",
+            "info" : "CasparCG channel, as set by the automation"
+        },
+        {
+            "id" : "astra_layer",
+            "type" : "string",
+            "info" : "CasparCG layer, as set by the automation"
+        }
+    ]
+}
