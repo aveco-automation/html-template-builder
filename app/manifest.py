@@ -29,12 +29,12 @@ def process_manifest(manifest:dict) -> str:
 
     tplinfo += "  <parameters>\n"
     for param in manifest.get("parameters", []):
-        tplinfo += "    <parameter id=\"{}\" type=\"{}\" info=\"{}\"/>\n".format(
-                    param["id"],
-                    param.get("type", "string"),
-                    param.get("info", "")
+        param["type"] = param.get("type" , "string")
+        param["info"] = param.get("info" , "")
 
-                )
+        attrs = " ".join([f"{k}=\"{v}\"" for k,v in param.items() if v  ])
+        tplinfo += f"    <parameter {attrs}/>\n"
+
     tplinfo += "  </parameters>\n"
     tplinfo += "</template>\n"
     return tplinfo
