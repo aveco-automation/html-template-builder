@@ -63,20 +63,32 @@ function next() {}
 function update(data) {}
 
 
-var amcp_bridge_url = "http://127.0.0.1:9731/amcp";
+var amcp_bridge_url = "http://127.0.0.1:9731/amcp"
+var amcp_bridge_timeout = 5000
 
 function amcp(command){
-    log("SENDING " + command)
-    var xhr = new XMLHttpRequest()
-    xhr.open('POST', amcp_bridge_url)
-    xhr.responseType = "text"
-    xhr.send(command)
+    return new Promise(function(resolve, reject){
 
-    xhr.onload = function() {
-    };
+        log("AMCP TX: " + command)
 
-    xhr.onerror = function() {
-        log("Status:" +  xhr.status + " : " + xhr.statusText)
-        log(xhr.responseText)
-    }
+        var xhr = new XMLHttpRequest()
+        xhr.timeout = amcp_bridge_timeout
+        xhr.open('POST', amcp_bridge_url)
+        xhr.responseType = "text"
+        xhr.send(command)
+
+        xhr.onload = function() {
+            log("AMCP RX: " + xhr.status + " " + command)
+            if (xhr.status < 400)
+                resolve(xhr.status, xhr.responseText)
+            else
+                reject(xhr.status, xhr.responseText)
+        };
+
+        xhr.onerror = function() {
+            log("AMCP RX ERR:", xhr.status)
+            reject(xhr.status, xhr.responseTextx)
+        }
+
+    }) // return new Promise
 }
