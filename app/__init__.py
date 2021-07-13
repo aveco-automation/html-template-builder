@@ -152,7 +152,10 @@ class TemplateBuilder():
         def handler(event):
             r = set()
             for path in event:
-                chname, fname = path.replace("\\", "/").split("/")[-2:]
+                try:
+                    chname, fname = path.replace("\\", "/").split("/")[-2:]
+                except ValueError:
+                    continue
                 if name is None or name == chname:
                     logging.debug(f"{fname} has been changed. Rebuilding {chname}")
                     self.build(name, dist=dist)
