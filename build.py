@@ -25,7 +25,7 @@ def build(
         dist_dir:pathlib.Path=typer.Option("./dist", help="Path to the directory where resulting zip files will be stored", **dir_checks)
         ):
     """
-    HTML Template Builder 0.3
+    HTML Template Builder 1.1.0
 
     For detailed instructions, see the README.md file or visit
     https://github.com/aveco-automation/html-template-builder
