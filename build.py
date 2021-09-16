@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 
 import pathlib
+import threading
 import typer
+import time
+import http.server
+import socketserver
 
 from nxtools import logging
 from app import TemplateBuilder
@@ -18,6 +22,7 @@ dir_checks = {
 @app.command()
 def build(
         watch:bool=typer.Option(False, help="Watch the source directory and rebuild templates when source files are changed"),
+        serve:bool=typer.Option(False, help="Same as --watch, but additionally run a web server"),
         dist:bool=typer.Option(False, help="Also generate zip files containing finished template(s)"),
         template:str=typer.Option(None, help="When specified, build/watch only the selected template and ignore the rest"),
         src_dir:pathlib.Path=typer.Option("./src", help="Path to the source root directory", **dir_checks),
@@ -48,8 +53,39 @@ def build(
     builder = TemplateBuilder(src_dir=src_dir, build_dir=build_dir, dist_dir=dist_dir)
 
     builder.build(template, dist=dist)
-    if watch:
-        builder.watch(template, dist=dist)
+    if watch or serve:
+
+        # start builder.watch in a separate thread
+        thread = threading.Thread(target=builder.watch, kwargs={"dist" : dist})
+        thread.start()
+
+        
+        if serve:
+            #TODO: much much smarter http handler. with index and stuff...
+            class Handler(http.server.SimpleHTTPRequestHandler):
+                def __init__(self, *args, **kwargs):
+                    super().__init__(*args, directory=str(build_dir), **kwargs)
+
+            with socketserver.TCPServer(("", 8000), Handler) as httpd:
+                logging.info("Serving at http://localhost:8000/")
+                try:
+                    httpd.serve_forever()
+                except KeyboardInterrupt:
+                    httpd.shutdown()
+                    builder.watcher.stop()
+                    logging.info("\n\nExiting...")
+
+            # Wait for the webserver to shut down
+            time.sleep(1)
+        else:
+            while True:
+                try:
+                    time.sleep(1)
+                except KeyboardInterrupt:
+                    builder.watcher.stop()
+                    break
+        
+
 
 
 if __name__ == '__main__':

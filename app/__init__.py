@@ -161,8 +161,8 @@ class TemplateBuilder():
                     self.build(name, dist=dist)
 
 
-        w = Watch(self.src_root, handler)
-        w.start()
+        self.watcher = Watch(self.src_root, handler)
+        self.watcher.start()
 
 
 
