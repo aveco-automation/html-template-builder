@@ -1,10 +1,51 @@
 {
     "js" : ["gsap.min.js"],
+    "author_name" : "Martin Wacker",
+    "author_email" : "martas@imm.cz",
     "parameters" : [
-        { "id" : "MainText", "type" : "string", "info" : "Main text line" },
-        { "id" : "HeaderText", "type" : "string", "info" : "Header text" },
-        { "id" : "LowerText", "type" : "string", "info" : "Bottom text line bellow the main text" },
-        { "id" : "Info", "type" : "string", "info" : "Info text" },
-        { "id" : "Label", "type" : "string", "info" : "Bottom small text" }
+        {
+            "id" : "MainText",
+            "type" : "string",
+            "default" : "Main text line"
+        },
+        {
+            "id" : "HeaderText",
+            "type" : "string",
+            "info" : "Header text",
+            "default" : "Header text"
+        },
+        {
+            "id" : "LowerText",
+            "type" : "string",
+            "info" : "Bottom text line bellow the main text",
+            "default" : "Bottom text line"
+        },
+        {
+            "id" : "Info",
+            "type" : "string",
+            "info" : "Info text",
+            "default" : "INFO"
+        },
+        {
+            "id" : "Label",
+            "type" : "string",
+            "info" : "Bottom small text",
+            "default" : "LABEL"
+        },
+        {
+            "id" : "astra_category",
+            "type" : "string",
+            "info" : "NAME"
+        },
+        {
+            "id" : "astra_output",
+            "type" : "string",
+            "info" : "CasparCG channel, as set by the automation"
+        },
+        {
+            "id" : "astra_layer",
+            "type" : "string",
+            "info" : "CasparCG layer, as set by the automation"
+        }
     ]
 }
