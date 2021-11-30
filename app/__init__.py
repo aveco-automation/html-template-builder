@@ -1,23 +1,23 @@
+"""Template builder."""
+
 import os
-import sys
 import time
 import json
 import zipfile
 import shutil
 
-from nxtools import *
+from nxtools import logging, log_traceback
 
 from .utils import process_sass, process_js, HTMLTemplate
 from .manifest import process_manifest
 from .watch import Watch
 
 
-
-
-
-
 class TemplateBuilder():
-    def __init__(self, src_dir, build_dir, dist_dir):
+    """Template builder class."""
+
+    def __init__(self, src_dir: str, build_dir: str, dist_dir: str) -> None:
+        """Initialize the template builder."""
         self.src_root = src_dir
         self.build_root = build_dir
         self.dist_root = dist_dir
@@ -26,14 +26,16 @@ class TemplateBuilder():
         self.base_css = process_sass("core/core.sass")
         self.base_js = process_js("core/core.js")
 
-
     @property
     def templates(self) -> list:
-        """Returns a list of templates available in the source directory"""
-        return [d for d in os.listdir(self.src_root) \
-            if os.path.isdir(os.path.join(self.src_root, d)) ]
+        """Return a list of templates available in the source directory."""
+        return [
+            d for d in os.listdir(self.src_root)
+            if os.path.isdir(os.path.join(self.src_root, d))
+        ]
 
     def _build(self, name: str) -> bool:
+        """Build a template."""
         source_dir = os.path.join(self.src_root, name)
         if not os.path.isdir(source_dir):
             logging.error(f"No such template {name}")
@@ -41,7 +43,7 @@ class TemplateBuilder():
 
         tpl_html_path = os.path.join(source_dir, "template.html")
         tpl_sass_path = os.path.join(source_dir, "template.sass")
-        tpl_js_path   = os.path.join(source_dir, "template.js")
+        tpl_js_path = os.path.join(source_dir, "template.js")
         manifest_path = os.path.join(source_dir, "manifest.json")
         logging.info("Building template", name)
 
@@ -52,7 +54,7 @@ class TemplateBuilder():
         self.template.clear()
 
         self.template["core_css"] = self.base_css
-        self.template["core_js"] =  self.base_js
+        self.template["core_js"] = self.base_js
 
         if os.path.exists(tpl_sass_path) and os.path.getsize(tpl_sass_path):
             self.template["tpl_css"] = process_sass(tpl_sass_path)
@@ -72,7 +74,7 @@ class TemplateBuilder():
         param_map = "var param_map = {\n"
         for i, param in enumerate(manifest.get("parameters", [])):
             param_map += f"   'f{i}' : '{param['id']}',\n"
-        param_map+= "}"
+        param_map += "}"
 
         self.template["param_map"] = param_map
 
@@ -111,9 +113,9 @@ class TemplateBuilder():
 
         return True
 
-
-    def build(self, name:str=None, dist:bool=False) -> bool:
-        if name == None:
+    def build(self, name: str = None, dist: bool = False) -> bool:
+        """Build a template / all templates."""
+        if name is None:
             templates = self.templates
         elif name in self.templates:
             templates = [name]
@@ -122,7 +124,7 @@ class TemplateBuilder():
             return False
 
         if not templates:
-            logging.error(f"No template found")
+            logging.error("No template found")
             return False
 
         for template in templates:
@@ -144,25 +146,21 @@ class TemplateBuilder():
                             filePath = os.path.join(folder_name, filename)
                             z.write(filePath, os.path.basename(filePath))
 
-            logging.goodnews(f"Building of {template} finished in {time.time() - start_time:.03f}s")
+            elapsed = time.time() - start_time
+            logging.goodnews(f"{template} built in {elapsed:.03f}s")
         return True
 
-
-    def watch(self, name:str=None, dist:bool=False) -> bool:
+    def watch(self, name: str = None, dist: bool = False) -> bool:
+        """Watch the source directory for changes."""
         def handler(event):
-            r = set()
             for path in event:
                 try:
                     chname, fname = path.replace("\\", "/").split("/")[-2:]
                 except ValueError:
                     continue
                 if name is None or name == chname:
-                    logging.debug(f"{fname} has been changed. Rebuilding {chname}")
+                    logging.debug(f"{fname} has been changed. Rebuilding.")
                     self.build(name, dist=dist)
-
 
         self.watcher = Watch(self.src_root, handler)
         self.watcher.start()
-
-
-

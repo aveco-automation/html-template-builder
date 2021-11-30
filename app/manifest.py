@@ -1,15 +1,20 @@
-def process_manifest(manifest:dict) -> str:
-    """ Convert a JSON manifest to CasparCG compatible XML
-    """
+def process_manifest(manifest: dict) -> str:
+    """ Convert a JSON manifest to CasparCG compatible XML."""
 
     tpl_header_data = {
-        "version" : "2.0.0",
-        "author_name" : manifest.get("author_name", "Nebula Broadcast"),
-        "author_email" : manifest.get("author_email", "info@nebulabroadcast.com"),
-        "template_info" : "",
-        "width" : manifest.get("width", 1920),
-        "height" : manifest.get("height", 1080),
-        "frame_rate" : manifest.get("frame_rate", 50),
+        "version": "2.0.0",
+        "author_name": manifest.get(
+            "author_name",
+            "Nebula Broadcast"
+        ),
+        "author_email": manifest.get(
+            "author_email",
+            "info@nebulabroadcast.com"
+        ),
+        "template_info": "",
+        "width": manifest.get("width", 1920),
+        "height": manifest.get("height", 1080),
+        "frame_rate": manifest.get("frame_rate", 50),
     }
 
     tplinfo = "<template"
@@ -29,13 +34,12 @@ def process_manifest(manifest:dict) -> str:
 
     tplinfo += "  <parameters>\n"
     for param in manifest.get("parameters", []):
-        param["type"] = param.get("type" , "string")
-        param["info"] = param.get("info" , "")
+        param["type"] = param.get("type", "string")
+        param["info"] = param.get("info", "")
 
-        attrs = " ".join([f"{k}=\"{v}\"" for k,v in param.items() if v  ])
+        attrs = " ".join([f"{k}=\"{v}\"" for k, v in param.items() if v])
         tplinfo += f"    <parameter {attrs}/>\n"
 
     tplinfo += "  </parameters>\n"
     tplinfo += "</template>\n"
     return tplinfo
-

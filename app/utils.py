@@ -1,6 +1,6 @@
-import os
-import copy
+"""HTML builder utilities."""
 
+import os
 import jinja2
 import htmlmin
 import jsmin
@@ -8,18 +8,24 @@ import sass
 
 
 class HTMLTemplate():
-    def __init__(self, template_path):
+    """HTML template builder."""
+
+    def __init__(self):
+        """Initialize the template."""
         with open("core/core.html") as f:
             self.template = jinja2.Template(f.read())
         self.clear()
 
     def clear(self):
+        """Clear the context."""
         self.ctx = {}
 
     def __setitem__(self, key, value):
+        """Set a variable in the context."""
         self.ctx[key] = value
 
     def __call__(self):
+        """Render the template with the context."""
         result = self.template.render(**self.ctx)
         return htmlmin.minify(
                 result,
@@ -28,13 +34,14 @@ class HTMLTemplate():
                 remove_optional_attribute_quotes=False
             )
 
+
 #
 # Minifiers
 #
 
+
 def process_js(source_path: str) -> str:
-    """Opens a javascript file specified by path,
-    returns minified version of the script as a string.
+    """Return a minified javascript file.
 
     Returns empty string if the path does not exist.
 
@@ -48,13 +55,12 @@ def process_js(source_path: str) -> str:
         with open(source_path) as js_file:
             minified = jsmin.jsmin(js_file.read())
             return minified
-    except:
+    except Exception:
         return ""
 
 
 def process_sass(source_path: str) -> str:
-    """Opens a SASS file specified by path,
-    returns minified CSS as a string.
+    """Return a minified sass script.
 
     Returns empty string if the path does not exist.
 
@@ -71,5 +77,3 @@ def process_sass(source_path: str) -> str:
                 output_style="compressed"
             )
         return minified
-
-
