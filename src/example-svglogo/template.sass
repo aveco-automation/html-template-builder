@@ -1,0 +1,47 @@
+$vertical-safe-area : 5%
+$horizontal-safe-area : 5%
+
+// Base container respects EBU R-095/2017 safe areas recommendation
+// Hidden by default, the container contains all elements which are
+// therefore displayed only when PLAY action is is invoked
+
+#container
+  position: absolute
+  top: $vertical-safe-area
+  bottom: $vertical-safe-area
+  left:  $horizontal-safe-area
+  right: $horizontal-safe-area
+
+  &.visible
+    visibility: visible
+
+  &.hidden
+    visibility: hidden
+
+
+// Set the logo size here
+
+#logo
+  position: absolute
+  width: 150px
+  height: auto
+
+
+// Logo positions
+
+.top-left
+  top: 0
+  left: 0
+
+.top-right
+  top: 0
+  right: 0
+
+.bottom-left
+  bottom: 0
+  left: 0
+
+.bottom-right
+  bottom: 0
+  right: 0
+

@@ -1,0 +1,31 @@
+{
+    "js" : ["gsap.min.js"],
+    "author_name" : "Martin Wacker",
+    "author_email" : "martas@imm.cz",
+    "parameters" : [
+        {
+            "id" : "Position",
+            "type" : "list",
+            "info" : "top-left;top-right;bottom-left;bottom-right",
+            "default" : "top-right"
+        },
+
+        {
+            "id" : "astra_category",
+            "type" : "string",
+            "info" : "Logo"
+        },
+
+        {
+            "id" : "astra_output",
+            "type" : "string",
+            "info" : "CasparCG channel, as set by the automation"
+        },
+
+        {
+            "id" : "astra_layer",
+            "type" : "string",
+            "info" : "CasparCG layer, as set by the automation"
+        }
+    ]
+}
