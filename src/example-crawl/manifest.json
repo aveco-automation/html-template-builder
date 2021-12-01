@@ -1,0 +1,12 @@
+{
+    "author_name" : "Martin Wacker",
+    "author_email" : "martas@imm.cz",
+    "parameters" : [
+        {
+            "id" : "text",
+            "type" : "string",
+            "default" : "",
+            "info" : "Text to be displayed"
+        }
+    ]
+}
