@@ -1,0 +1,1 @@
+const picturePath = "D:\\Content\\Images\\"

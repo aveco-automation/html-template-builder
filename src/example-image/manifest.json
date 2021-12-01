@@ -1,0 +1,9 @@
+{
+    "js": ["config.js"],
+    "author_name": "Martin Wacker",
+    "author_email": "martas@imm.cz",
+    "parameters": [{
+        "id": "image",
+        "type": "image"
+    }]
+}

@@ -1,0 +1,35 @@
+$vertical-safe-area : 5%
+$horizontal-safe-area : 5%
+$transition-duration : 2s
+
+// LAYOUT
+
+#container
+  position: absolute
+  top: $vertical-safe-area
+  bottom: $vertical-safe-area
+  left:  $horizontal-safe-area
+  right: $horizontal-safe-area
+
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+  img
+    position: relative
+    width: 100%
+    height: 100%
+    object-fit: contain
+
+// ANIMATION
+
+.visible
+  opacity: 1
+  transform: translateY(0%)
+  transition: all $transition-duration
+
+.hidden
+  opacity: 0
+  transform: translateY(100%)
+  transition: all $transition-duration
